@@ -1,13 +1,13 @@
-1) 300s +exercise freedom // melting the gel
-2) 60s  balance the col.
-3) 120s DNA product adherence
-4) 60s
-5) 60s
-6) 120s buffer PW purification
-7) 60s
-8) 120s
-9) 60s
-10) 180s eliminate ethanol
-11) 300s volatize ethanol
-12) 900s dissolve DNA sample
-13) 180s obtain DNA solution
+1) 30 +exercise freedom // melting the gel
+2) 60  balance the col.
+3) 120 DNA product adherence
+4) 60
+5) 60
+6) 120 buffer PW purification
+7) 60
+8) 120
+9) 60
+10) 180 eliminate ethanol
+11) 300 volatize ethanol
+12) 900 dissolve DNA sample
+13) 180 obtain DNA solution

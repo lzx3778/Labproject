@@ -24,8 +24,8 @@ public class IOHandling {
         scanner = new Scanner(in);
     }
 
-    public static String read(int step){
-        String instruction = "step not found!";
+    public static String[] read(int step){
+        String[] instructions = {"0","step not found!"};
 
         //is it the last line?
         while (scanner.hasNext()){
@@ -35,20 +35,41 @@ public class IOHandling {
             for (int i = 0;i < LineNow.length();i ++) {
                 //the end of step number?
                 if (LineNow.charAt(i) == ')') {
-                    System.out.println("");
                     break;
                 }else {
                     //continued step number
-                    System.out.print(xuhao);
                     xuhao = xuhao * 10 + Integer.parseInt(valueOf(LineNow.charAt(i)));
                 }
             }
             if (xuhao == step) {
-                instruction = LineNow;
+                instructions[1] = LineNow;
                 break;
             }
         }
-        return instruction;
+        int spaceAmount = 0;
+        int timeNumber = 0;
+        boolean startReadTime = false;
+        for (int i = 0;i < instructions[1].length();i ++) {
+            //the end of step number?
+            if (instructions[1].charAt(i) == ' ' & spaceAmount == 0) {
+                startReadTime = true;
+                spaceAmount ++;
+                continue;
+            }
+
+            if (startReadTime) {
+                if (instructions[1].charAt(i) == ' ') {
+                    System.out.println("");
+                    startReadTime = false;
+                    break;
+                } else {
+                    //continued time number
+                    timeNumber = timeNumber * 10 + Integer.parseInt(String.valueOf(instructions[1].charAt(i)));
+                }
+            }
+        }
+        instructions[0] = String.valueOf(timeNumber);
+        return instructions;
     }
 
     public static void write(){

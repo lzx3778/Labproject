@@ -1,5 +1,6 @@
 package layout;
 
+import program.IOHandling;
 import program.TimeCount;
 
 import javax.swing.*;
@@ -33,11 +34,18 @@ public class MainFrame extends JFrame {
 class Panel extends JPanel implements Runnable{
 
     private static TimeCount timeCount;
+    private static IOHandling ioHandling;
 
     private static JLabel jLabel;
 
+    private static int step;
+
     public Panel(){
         timeCount = new TimeCount();
+        ioHandling = new IOHandling("hh.txt");
+
+        step = 0;
+
         setVisible(true);
         setLayout(null);
 
@@ -45,7 +53,7 @@ class Panel extends JPanel implements Runnable{
         jLabel.setBounds(150,200,200,100);
         jLabel.setFont(new Font("Consolas",1,20));
 
-        JButton jButton = new JButton("up");
+        JButton jButton = new JButton("start");
         jButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,31 +64,7 @@ class Panel extends JPanel implements Runnable{
         jButton.setVisible(true);
         jButton.setBackground(Color.white);
 
-        JButton jButton2 = new JButton("down");
-        jButton2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timeCount.startCountDown(timeCount.getTimeNumber());
-            }
-        });
-        jButton2.setBounds(50,100,100,50);
-        jButton2.setVisible(true);
-        jButton2.setBackground(Color.white);
-
-        JButton jButton3 = new JButton("stop");
-        jButton3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timeCount.stop();
-            }
-        });
-        jButton3.setBounds(50,150,100,50);
-        jButton3.setVisible(true);
-        jButton3.setBackground(Color.white);
-
         this.add(jButton);
-        this.add(jButton2);
-        this.add(jButton3);
         this.add(jLabel);
 
         Thread thread = new Thread(this);
@@ -95,7 +79,13 @@ class Panel extends JPanel implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            jLabel.setText(timeCount.getTimeNumber()+"");
+            if (timeCount.getTimeNumber() == 0) {
+                step ++;
+                String[] currentStep = ioHandling.read(step);
+                timeCount.startCountDown(Double.parseDouble(currentStep[0]));
+            }
+            jLabel.setText(timeCount.getTimeNumber() + "");
+
         }
     }
 }
